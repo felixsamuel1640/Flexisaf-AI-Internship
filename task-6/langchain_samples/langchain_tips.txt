@@ -1,0 +1,13 @@
+LANGCHAIN BEST PRACTICES
+
+Getting Started:
+LangChain is a framework for building LLM applications. It provides chains, agents, memory management, and retrieval tools.
+
+RAG Systems:
+Use vector databases like FAISS, Chroma, or Pinecone for document retrieval. Chunk documents into 500-1000 tokens. Use semantic search for better results than keyword matching.
+
+Agent Development:
+Create tools using the @tool decorator. Agents work best with 3-5 tools. Always provide clear tool descriptions for the LLM. Test agents with diverse queries.
+
+Memory Management:
+Use ConversationBufferWindowMemory for chat applications. Limit memory to last 10-20 messages to avoid context overflow. Clear memory periodically for long sessions.

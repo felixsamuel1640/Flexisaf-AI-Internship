@@ -1,0 +1,50 @@
+COMPANY HANDBOOK
+
+Vacation Policy:
+All full-time employees receive 15 days of paid vacation per year. Vacation days accrue monthly at a rate of 1.25 days per month. Employees must request vacation at least 2 weeks in advance through the HR portal.
+
+Remote Work Policy:
+Employees may work remotely up to 3 days per week. Remote work requests must be approved by direct managers. All remote workers must be available during core hours (10am-3pm EST).
+
+Health Benefits:
+The company provides comprehensive health insurance including medical, dental, and vision coverage. Employees can enroll during the annual open enrollment period or within 30 days of hire. The company covers 80% of premium costs.
+
+Professional Development:
+Employees have access to an annual professional development budget of $2,000. This can be used for courses, conferences, certifications, or books related to your role.
+EOF
+
+# Document 2: Python guide
+PYTHON PROGRAMMING GUIDE
+
+Introduction:
+Python is a high-level, interpreted programming language created by Guido van Rossum in 1991. It emphasizes code readability and simplicity.
+
+Key Features:
+- Easy to learn syntax
+- Dynamic typing
+- Extensive standard library
+- Great for data science, web development, automation
+- Strong community support
+
+Popular Frameworks:
+Django and Flask are popular for web development. Pandas and NumPy are essential for data science. PyTorch and TensorFlow are used for machine learning.
+
+Best Practices:
+Follow PEP 8 style guide. Use virtual environments. Write docstrings for functions. Use type hints for better code clarity.
+EOF
+
+# Document 3: LangChain tips
+cat > sample_docs/langchain_tips.txt << 'EOF'
+LANGCHAIN BEST PRACTICES
+
+Getting Started:
+LangChain is a framework for building LLM applications. It provides chains, agents, memory management, and retrieval tools.
+
+RAG Systems:
+Use vector databases like FAISS, Chroma, or Pinecone for document retrieval. Chunk documents into 500-1000 tokens. Use semantic search for better results than keyword matching.
+
+Agent Development:
+Create tools using the @tool decorator. Agents work best with 3-5 tools. Always provide clear tool descriptions for the LLM. Test agents with diverse queries.
+
+Memory Management:
+Use ConversationBufferWindowMemory for chat applications. Limit memory to last 10-20 messages to avoid context overflow. Clear memory periodically for long sessions.
