@@ -13,39 +13,14 @@ and admission guidelines to provide accurate, context-aware responses.
 
 ## Key Features & Technical Innovation
 
-### 1. Agentic Reasoning (Modern LangChain)
-
-This project utilizes the latest LangGraph-driven Agent patterns:
-
-- **Dynamic Decision Making** — The agent evaluates user intent and decides autonomously whether 
-to chat directly or invoke the `query_school_knowledge` tool.
-- **Autonomous Tool-Use** — Using the `create_agent` architecture, the LLM is equipped to browse 
-internal school documents only when factual data is required.
-
-### 2. Advanced Hybrid Retrieval (RAG)
-
-To ensure the highest accuracy, the system implements a Hybrid RAG pipeline:
-
-- **Semantic Search** — Uses Cohere v3 Embeddings and ChromaDB to understand the deep context of 
-parent queries.
-- **Keyword Search** — Utilizes BM25 for precise matching of specific terms (e.g., "JSS1", 
-"Admission Form").
-- **Reciprocal Rank Fusion (RRF)** — Results are mathematically merged using an 
-`EnsembleRetriever` to prioritize the most relevant information from both search methods.
-
-### 3. Non-Blocking Asynchronous Streaming
-
-The core loop is built on `asyncio` using `astream`:
-
-- **Real-time UX** — Tokens are streamed to the terminal as they are generated for a smooth 
-"live typing" experience.
-- **Attribute Safety** — Implements robust attribute-checking (`hasattr`) to safely handle the 
-transition between the agent's internal reasoning and final responses.
-
-### 4. Stateful Conversational Memory
-
-Using `InMemorySaver` with unique `thread_id` tracking, the assistant maintains a Short-Term 
-Memory, allowing it to recall names and context across a multi-turn dialogue.
+- **Agentic Reasoning (LangGraph)** — The agent autonomously decides whether to answer from its 
+own internal logic or invoke the `query_school_knowledge` tool to browse school documents.
+- **Hybrid Retrieval (RAG)** — Combines Semantic Search (Cohere v3 Embeddings + ChromaDB) with 
+Keyword Search (BM25) using Reciprocal Rank Fusion (RRF) for maximum accuracy.
+- **Stateful Conversational Memory** — Uses `InMemorySaver` with unique `thread_id` tracking to 
+maintain context, remember user names, and summarize prior conversation turns.
+- **Asynchronous Streaming** — Built with `asyncio` to provide a real-time, "live typing" user 
+experience in the terminal.
 
 ---
 
@@ -54,11 +29,23 @@ Memory, allowing it to recall names and context across a multi-turn dialogue.
 | Layer | Technology |
 |---|---|
 | LLM | Llama 3.3 70B (via Groq Cloud) |
-| Orchestration | LangGraph & LangChain (Agentic Pattern) |
+| Orchestration | LangGraph & LangChain |
 | Embeddings | Cohere English v3.0 |
 | Vector Store | ChromaDB |
-| Data Processing | PyMuPDF (Directory Loading) |
-| Runtime | Python 3.11+ (Asynchronous Programming) |
+| Data Processing | PyMuPDF |
+| Runtime | Python 3.11+ |
+
+---
+
+## Project Structure
+
+| File / Folder | Description |
+|---|---|
+| `FINAL_PROJECT.py` | Main asynchronous production script |
+| `Final_Project_Notebook.ipynb` | Interactive notebook showing data exploration and RAG 
+pipeline steps |
+| `screenshots/` | Visual proof of the agent's performance, tool-calling, and memory |
+| `untitled_folder/` | Directory containing source PDF documents (Knowledge Base) |
 
 ---
 
@@ -68,13 +55,14 @@ Memory, allowing it to recall names and context across a multi-turn dialogue.
 
 ```bash
 git clone https://github.com/felixsamuel1640/Flexisaf-AI-Internship.git
-cd Flexisaf-AI-Internship/FIP
+cd Flexisaf-AI-Internship/task-12
 ```
 
 **2. Install dependencies**
 
 ```bash
-pip install langchain-groq langchain-cohere langchain-chroma pymupdf pydantic-settings langgraph
+pip install langchain-groq langchain-cohere langchain-chroma pymupdf pydantic-settings langgraph 
+nest_asyncio
 ```
 
 **3. Configure environment variables**
@@ -86,35 +74,42 @@ GROQ_API_KEY=your_api_key_here
 COHERE_API_KEY=your_api_key_here
 ```
 
-**4. Prepare your data**
+---
 
-Place school-related PDF documents in the `untitled_folder/` directory.
+## How to Run the Project
 
-**5. Launch the assistant**
+### Command Line Interface (CLI)
+
+For the full asynchronous streaming experience with real-time terminal output:
 
 ```bash
 python final_project.py
 ```
 
+### Interactive Jupyter Notebook
+
+To see the step-by-step logic and model usage:
+
+1. Open `final_project_notebook.ipynb`.
+2. Run all cells sequentially to view the pre-saved outputs and the interactive chat loop at the 
+bottom.
 ---
 
-## Admin Testing Suite
+## Capability Testing Suite
 
-To verify the capabilities of the Super Agent, use the following prompts:
+Use these prompts to verify the agent's sophisticated behavior:
 
 | Category | Test Prompt | Expected Behavior |
 |---|---|---|
 | Accuracy | "What are the tuition fees for Grade 3 for the 2026 session?" | Agent triggers 
-`query_school_knowledge` and pulls data from PDFs. |
-| Memory | "Hi, I am Mr. Musa. My daughter Zara is 5 years old." then "What class should Zara 
-join?" | Agent remembers names and age to suggest the correct class. |
-| Reasoning | "How are you today?" | Agent responds conversationally without using the RAG tool. 
-|
-| Guardrails | "How do I bake a cake?" | Agent politely declines, staying within its role as a 
-school assistant. |
-| Streaming | "Summarize the school's entire code of conduct." | Observe real-time token 
-streaming for long responses. |
+`query_school_knowledge` and extracts PDF data. |
+| Memory | "My name is Mr. Samuel and my daughter is Aisha." then "What was my name?" | Agent 
+recalls user-provided details across multiple turns. |
+| Reasoning | "Who are you and what can you do?" | Agent responds via System Prompt without 
+using the RAG tool. |
+| Guardrails | "How do I bake a cake?" | Agent politely stays within its role as a school 
+assistant. |
 
 ---
 
-*Developed as part of the FlexiSaf AI Internship Program — Final Project.*
+*Developed as the Final Project for the FlexiSaf AI Engineering Internship.*
